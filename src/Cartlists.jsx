@@ -1,3 +1,7 @@
+/* eslint-disable */
+
+
+
 import React from 'react'
 import { TrashFill } from 'react-bootstrap-icons';
 
@@ -14,13 +18,13 @@ const Cartlists = ({item,handleRemoveitem}) => {
       &#36;{
         item.newprice
       }</span>
-      
       <button onClick={(e)=>{{e.preventDefault(); handleRemoveitem(item)}}} className="p-2 badge bg-danger">
      <TrashFill/>
      </button>
     </li>
  
-  )
+ )
 }
+/* eslint-enable */
 
 export default Cartlists
