@@ -9,18 +9,87 @@ import { useState } from "react";
 
 
 
+
 function App() {
-  const [cartcount, setCount] = useState(0)
-  const inc = () => {
-    setCount(cartcount + 1)
+  
+
+  // let handlecartcount = ()
+  
+ const [cartitem, setCartitem] = useState([]);
+ const [total, setTotal] = useState(0);
+
+
+  let handleAddtocart = (product) =>{
+    if(!cartitem.some((obj)=>obj.id === product.id)){
+   setCartitem ([...cartitem ,product])
+   setTotal (total + product.newprice)
+  }}  
+
+  // const [remove, setRemove] = useState([cartitem])
+  // const [dectotal, setDectotal] = useState(0)
+
+
+  const handleRemoveitem = (item)=>{
+    let itemIndex = cartitem.findIndex(obj=>obj.id === item.id)
+    cartitem.splice(itemIndex,1)
+    setCartitem([...cartitem])
+    setTotal(total-item.newprice)
+    // setRemove([...cartitem,item])
+    // setDectotal(dectotal-item.newprice)
   }
+
 
   const products = [
     {
       img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+      id:"1",
       title: "Fancy Product",
       rating: false,
-      newprice: "$40.00 - $80.00"
+      newprice: 40
+
+    },
+    {
+      img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+      id:"2",
+      title: "Special Item",
+      rating: true,
+      sale: "Sale",
+      oldprice: "$20.00",
+      newprice: 18
+    },
+    {
+      img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+      title: "Sale Item",
+      id:"3",
+      rating: false,
+      sale: "Sale",
+      oldprice: "$50.00",
+      newprice: 25
+
+    },
+    {
+      img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+      title: "Popular Item",
+      rating: true,
+      id:"4",
+      newprice: 40
+
+    },
+    {
+      img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+      title: "Sale Item",
+      rating: false,
+      sale: "Sale",
+      oldprice: "$50.00",
+      id:"5",
+      newprice: 25
+    },
+    {
+      img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+      title: "Fancy Product",
+      rating: false,
+      id:"6",
+      newprice: 120
 
     },
     {
@@ -29,68 +98,43 @@ function App() {
       rating: true,
       sale: "Sale",
       oldprice: "$20.00",
-      newprice: "  $18.00"
-    },
-    {
-      img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
-      title: "Sale Item",
-      rating: false,
-      sale: "Sale",
-      oldprice: "$50.00",
-      newprice: "  $25.00"
-
+      id:"7",
+      newprice: 18
     },
     {
       img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
       title: "Popular Item",
       rating: true,
-      newprice: "$40.00"
-
-    },
-    {
-      img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
-      title: "Sale Item",
-      rating: false,
-      sale: "Sale",
-      oldprice: "$50.00",
-      newprice: "  $25.00"
-    },
-    {
-      img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
-      title: "Fancy Product",
-      rating: false,
-      newprice: "$120.00 - $280.00"
-    },
-    {
-      img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
-      title: "Special Item",
-      rating: true,
-      sale: "Sale",
-      oldprice: "$20.00",
-      newprice: "  $18.00"
-    },
-    {
-      img: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
-      title: "Popular Item",
-      rating: true,
-      newprice: "$40.00"
+      id:"8",
+      newprice: 40
     }
   ]
   return (
-    <div>
-      <Navbar Count={cartcount} />
+    <>
+    <Navbar
+    
+     handleRemoveitem={handleRemoveitem} 
+     cartitem={cartitem} 
+     handleAddtocart={handleAddtocart} 
+     
+     total = {total}/>
+     
       <Header />
       <section className="py-5">
         <div className="container px-4 px-lg-5 mt-5">
           <div className="row gx-4 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {products.map((product) => {
-              return <Cart addCart={inc} cart={product} />
+            {products.map((product,index) => {
+              return <Cart key={index} 
+              handleAddtocart={handleAddtocart} 
+              handleRemoveitem={handleRemoveitem}
+              product={product} 
+              cartitem={cartitem}/>
             })}
           </div>
         </div>
       </section>
       <Footer />
-    </div>
+    </>
   )
 }
 
